@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        maven 'Maven'
+    }
     stages {
         stage('Build') {
             steps {
@@ -57,7 +60,7 @@ pipeline {
     }
     post {
         always {
-            junit 'target/surefire-reports/*.xml'
+            junit testResults: 'target/surefire-reports/*.xml', allowEmptyResults: true
             archiveArtifacts artifacts: 'target/*.jar', onlyIfSuccessful: false
         }
     }
